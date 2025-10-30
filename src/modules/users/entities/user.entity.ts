@@ -1,4 +1,4 @@
-import { Message } from "src/modules/chat/entities/message.entity";
+import { Message } from "src/modules/messages/entities/message.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('users')
@@ -26,7 +26,4 @@ export class User {
 
   @UpdateDateColumn()
   updateAt: Date;
-
-  @OneToMany(() => Message, (message) => message.sender)
-  messages: Message[];
 }

@@ -1,3 +1,4 @@
+import { Room } from "src/modules/rooms/entities/room.entity";
 import { User } from "src/modules/users/entities/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -9,13 +10,12 @@ export class Message {
     @Column('text')
     content: string;
 
-    @ManyToOne(() => User, (user) => user.messages, {
-        onDelete: 'CASCADE',
-        eager: true
-    })
-    @JoinColumn({ name: 'sender_id'})
+    @ManyToOne(() => User, (user) => user.id, { eager: true })
     sender: User;
 
-    @CreateDateColumn({ name: 'created_at'})
+    @ManyToOne(() => Room, (room) => room.id, { eager: true })
+    room: Room;
+
+    @CreateDateColumn()
     createdAt: Date;
 }
