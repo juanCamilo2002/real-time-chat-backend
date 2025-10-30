@@ -6,7 +6,8 @@ import { getTypeOrmConfig } from './config/database.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
-import { ChatModule } from './modules/chat/chat.module';
+import { RoomsModule } from './modules/rooms/rooms.module';
+import { MessagesModule } from './modules/messages/messages.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { ChatModule } from './modules/chat/chat.module';
     }),
     UsersModule,
     AuthModule,
-    ChatModule
+    RoomsModule,
+    MessagesModule
   ],
   providers: [
     {
