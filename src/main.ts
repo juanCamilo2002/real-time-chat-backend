@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { RedisIoAdapter } from './adapters/redis-io.adapter';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +12,13 @@ async function bootstrap() {
     credentials: true
   });
   app.setGlobalPrefix('api')
+
+  const configService = app.get(ConfigService)
+
+  const redisAdapter = new RedisIoAdapter(configService);
+  await redisAdapter.connectToRedis();
+  app.useWebSocketAdapter(redisAdapter);
+
   const config = new DocumentBuilder()
     .setTitle('Chat real time backend')
     .setDescription('This is an api about chat real time functions')
